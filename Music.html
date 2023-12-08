@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music</title>
+    <link rel="stylesheet" href="Music.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+</head>
+
+    <body>
+        <div class="card">
+            <img src="" alt="" id="song-cover"/>
+            <div class="para">
+            <p class="title" id="title"></p>
+            <p class="name" id="name"></p>
+            </div>
+
+            <!-- {/* progress bar  */} -->
+            <div class="progress-area">
+
+                <div class="timer">
+                    <span class="current" id="current"></span>
+                    
+                    <span class="end-time" id="end">3:40</span>
+                   
+                </div>
+            <div class="progress">
+                
+                <div class="progress-bar" id="progress-bar">
+                   
+                </div>
+                </div>
+            </div>
+
+            <!-- {/* pause start and next  */} -->
+        <div class="active">
+           <button> <img src="./resource/Stop_and_play_fill-1.svg" alt=""  class="back" id="back" onclick="playPrev()"/></button>
+           <button  id="pause" onclick="playPause()"><img src="./resource/Play_fill.svg" class="pause"></button>
+           <button> <img src="./resource/Stop_and_play_fill.svg" alt=""  class="next" id="next" onclick="playNext()"/></button>
+        </div>
+        <audio src="" type="audio/mp3" id="music"></audio>
+        </div>
+
+
+    <script>
+       
+  const audio = document.getElementById('music');
+  const playPauseBtn = document.getElementById('pause');
+  const prevBtn = document.getElementById('back');
+  const nextBtn = document.getElementById('next');
+  const songImage = document.getElementById('song-cover');
+  const titleSong = document.getElementById('title');
+  const artistSong = document.getElementById('name');
+
+//   progress bar 
+const progressBar = document.getElementById('progress-bar');
+const progressContainer= document.getElementById('progress');
+const timeContainer = document.getElementById('current');
+const endContainer = document.getElementById('end');
+
+let currentSongIndex = 0;
+// Define the tracks that have to be played 
+const musicInfo = [
+  
+    {
+      song: "Lost On You (Live)",
+      artist: "LP",
+      img: "../resource/cover-1.png",
+    src: "../resource/forest-lullaby-110624.mp3"
+    },
+    {
+      song: "Raise",
+      artist: "Chilli Beans",
+      img: "../resource/cover-2.png",
+    src: "../resource/lost-in-city-lights-145038.mp3"
+  },
+  {
+    song: "Night Owl",
+    artist: "Broke For Free",
+    img: "https://images.pexels.com/photos/2264753/pexels-photo-2264753.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
+    src: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/WFMU/Broke_For_Free/Directionless_EP/Broke_For_Free_-_01_-_Night_Owl.mp3"
+  },
+  {
+    song: "Enthusiast",
+    artist: "Tours",
+    img: "https://images.pexels.com/photos/3100835/pexels-photo-3100835.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
+    src: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3"
+  },
+  {
+    song: "Shipping Lanes",
+    artist: "Chad Crouch",
+    img: "https://images.pexels.com/photos/1717969/pexels-photo-1717969.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
+    src: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Shipping_Lanes.mp3",
+  },
+    
+  ];
+
+  function playPause() {
+    if (audio.paused) {
+        audio.play();
+        playPauseBtn.innerHTML = '<img src="./resource/pause_fill.svg" class="play">'; // Pause icon
+    } else {
+        audio.pause();
+        playPauseBtn.innerHTML = '<img src="./resource/Play_fill.svg" class="pause">'; // Play icon
+    }
+}
+// play next song 
+function playNext() {
+
+if (currentSongIndex < musicInfo.length -1)
+    currentSongIndex +=1;
+else currentSongIndex = 0;
+loadSong(currentSongIndex);
+playPause();
+}
+// play previous song 
+function playPrev() {
+
+if (currentSongIndex > 0)
+currentSongIndex -= 1;
+else currentSongIndex= musicInfo.length;
+loadSong(currentSongIndex);
+playPause();
+}
+// load song 
+function loadSong() {
+    titleSong.textContent = musicInfo[currentSongIndex].song;
+  artistSong.textContent = musicInfo[currentSongIndex].artist;
+  audio.src = musicInfo[currentSongIndex].src;
+  songImage.src = musicInfo[currentSongIndex].img;
+
+  audio.addEventListener("ended", playNext);
+  
+}
+
+
+
+// load of the first song 
+loadSong();
+
+// progress bar 
+audio.addEventListener('timeupdate', updateProgressBar);
+
+progressContainer.addEventListener('click', setProgressBar);
+
+// audio.addEventListener('loadedmetadata', () => {
+//     const duration = audio.duration;
+//     progressContainer.style.cursor = 'pointer';
+
+//     const durationTimeMinutes = Math.floor(audio.duration / 60);
+//     const durationTimeSeconds = Math.floor(audio.duration % 60);
+   
+// })
+
+function updateProgressBar(){
+    // start time 
+    const currentTimeMinutes = Math.floor(audio.currentTime / 60);
+    const currentTimeSeconds = Math.floor(audio.currentTime % 60);
+
+    timeContainer.textContent = `${formatTime(currentTimeMinutes)}:${formatTime(currentTimeSeconds)}`;
+
+    // end time 
+    const durationTimeMinutes = Math.floor(audio.duration / 60);
+    const durationTimeSeconds = Math.floor(audio.duration % 60);
+
+    endContainer.textContent = `${formatTime(durationTimeMinutes)}:${formatTime(durationTimeSeconds)}`;
+
+    const percentage = (audio.currentTime / audio.duration) * 100;
+    progressBar.style.width = `${percentage}%`;
+}
+
+function setProgressBar(e){
+    const width = this.clientWidth;
+    const clickX = e.clientX - this.getBoundingClientRect().left;
+    const durations = audio.duration;
+
+    audio.currentTime = (clickX / width) * durations;
+    
+}
+function formatTime(time) {
+            return time < 10 ? `0${time}` : time;
+        }
+
+    </script>
+    </body>
+</html>

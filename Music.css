@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@100;300;500;700&family=Poppins:ital,wght@0,100;0,300;0,700;1,100;1,200;1,300;1,800&family=Public+Sans:wght@100;200;500&family=Raleway:wght@500&family=Roboto+Condensed:wght@300&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  
+ 
+}
+:root{
+  --accent-color: #c93b76;
+  --button-accent-color: #b50750;
+}
+body{
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  display: flex;
+  background: url("./resource/bg.jpg");
+  
+}
+.card{
+  height: 450px;
+ width: 300px;
+ background-color: rgba(30, 24, 36, 0.7);
+ border-radius: 20px;
+ position: absolute;
+}
+.card img{
+  margin: 20px 25px 10px 15px;
+  width: 270px;
+  height: 250px;
+  border-radius: 10px;
+}
+.para{
+ 
+  text-align: center;
+}
+.para .title{
+  
+  color: #E5E7EB;
+  font-size: 1rem;
+  padding-bottom: 5px;
+}
+.para .name{
+  font-size: 0.75rem;
+  color: #4D5562;
+}
+.progress-area{
+  padding: 10px 20px ;
+}
+.progress .progress-bar{
+  height: inherit;
+  width: 0;
+  border-radius: inherit;
+  background-color: #C93B76;
+  box-shadow: 0 0 10px var(--accent-color), 0 0 1px var(--accent-color),
+  0 0 2px var(--accent-color);
+}
+.progress{
+  height: 4px;
+  width: 100%;
+  background: #E5E7EB;
+  border-radius: 50px;
+  cursor: pointer;
+}
+.timer{
+  display: flex;
+  justify-content: space-between;
+  color: #4D5562;
+  padding-bottom: 5px;
+}
+.current{
+  font-size: 10px;
+}
+.end-time{
+    font-size: 10px;
+}
+.active{
+  display: flex;
+  margin-left: 5px;
+  justify-content: center;
+  align-items: center;
+  
+}
+.active img{
+  width: 2rem;
+  height: 2rem;
+}
+.back{
+  cursor: pointer;
+}
+
+.next{
+  cursor: pointer;
+}
+button .next:hover, button .back:hover{
+ 
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--button-accent-color),
+  0 0 1px var(--button-accent-color), 0 0 2px var(--button-accent-color);
+}
+button{
+  
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+}
+button .pause{
+  background-color: #C93B76;
+ display: flex;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  padding: 5px;
+  box-shadow: 0 0 10px var(--accent-color), 0 0 1px var(--accent-color),
+  0 0 2px var(--accent-color);
+}
+button .play{
+  background-color: #C93B76;
+ display: flex;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  padding: 5px;
+  box-shadow: 0 0 10px var(--accent-color), 0 0 1px var(--accent-color),
+  0 0 2px var(--accent-color);
+}
